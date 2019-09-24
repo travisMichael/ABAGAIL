@@ -1,6 +1,8 @@
 package opt.test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import dist.DiscreteDependencyTree;
@@ -8,12 +10,7 @@ import dist.DiscretePermutationDistribution;
 import dist.DiscreteUniformDistribution;
 import dist.Distribution;
 
-import opt.SwapNeighbor;
-import opt.GenericHillClimbingProblem;
-import opt.HillClimbingProblem;
-import opt.NeighborFunction;
-import opt.RandomizedHillClimbing;
-import opt.SimulatedAnnealing;
+import opt.*;
 import opt.example.*;
 import opt.ga.CrossoverFunction;
 import opt.ga.SwapMutation;
@@ -33,7 +30,7 @@ import shared.FixedIterationTrainer;
  */
 public class TravelingSalesmanTest {
     /** The n value */
-    private static final int N = 50;
+    private static final int N = 20;
     /**
      * The test main
      * @param args ignored
@@ -54,34 +51,176 @@ public class TravelingSalesmanTest {
         CrossoverFunction cf = new TravelingSalesmanCrossOver(ef);
         HillClimbingProblem hcp = new GenericHillClimbingProblem(ef, odd, nf);
         GeneticAlgorithmProblem gap = new GenericGeneticAlgorithmProblem(ef, odd, mf, cf);
+
+        runMultipleTests();
         
-        RandomizedHillClimbing rhc = new RandomizedHillClimbing(hcp);      
-        FixedIterationTrainer fit = new FixedIterationTrainer(rhc, 200000);
-        fit.train();
-        System.out.println(ef.value(rhc.getOptimal()));
+//        RandomizedHillClimbing rhc = new RandomizedHillClimbing(hcp);
+//        FixedIterationTrainer fit = new FixedIterationTrainer(rhc, 200000);
+//        fit.train();
+//        System.out.println(ef.value(rhc.getOptimal()));
+//
+//        SimulatedAnnealing sa = new SimulatedAnnealing(1E12, .95, hcp);
+//        fit = new FixedIterationTrainer(sa, 200000);
+//        fit.train();
+//        System.out.println(ef.value(sa.getOptimal()));
+//
+//        StandardGeneticAlgorithm ga = new StandardGeneticAlgorithm(200, 150, 20, gap);
+//        fit = new FixedIterationTrainer(ga, 1000);
+//        fit.train();
+//        System.out.println(ef.value(ga.getOptimal()));
+//
+//        // for mimic we use a sort encoding
+//        ef = new TravelingSalesmanSortEvaluationFunction(points);
+//        int[] ranges = new int[N];
+//        Arrays.fill(ranges, N);
+//        odd = new  DiscreteUniformDistribution(ranges);
+//        Distribution df = new DiscreteDependencyTree(.1, ranges);
+//        ProbabilisticOptimizationProblem pop = new GenericProbabilisticOptimizationProblem(ef, odd, df);
         
-        SimulatedAnnealing sa = new SimulatedAnnealing(1E12, .95, hcp);
-        fit = new FixedIterationTrainer(sa, 200000);
-        fit.train();
-        System.out.println(ef.value(sa.getOptimal()));
+//        MIMIC mimic = new MIMIC(200, 100, pop);
+//        fit = new FixedIterationTrainer(mimic, 1000);
+//        fit.train();
+//        System.out.println(ef.value(mimic.getOptimal()));
         
-        StandardGeneticAlgorithm ga = new StandardGeneticAlgorithm(200, 150, 20, gap);
-        fit = new FixedIterationTrainer(ga, 1000);
-        fit.train();
-        System.out.println(ef.value(ga.getOptimal()));
-        
-        // for mimic we use a sort encoding
-        ef = new TravelingSalesmanSortEvaluationFunction(points);
-        int[] ranges = new int[N];
-        Arrays.fill(ranges, N);
-        odd = new  DiscreteUniformDistribution(ranges);
-        Distribution df = new DiscreteDependencyTree(.1, ranges); 
-        ProbabilisticOptimizationProblem pop = new GenericProbabilisticOptimizationProblem(ef, odd, df);
-        
-        MIMIC mimic = new MIMIC(200, 100, pop);
-        fit = new FixedIterationTrainer(mimic, 1000);
-        fit.train();
-        System.out.println(ef.value(mimic.getOptimal()));
-        
+    }
+
+    private static void runMultipleTests() {
+        int n_1 = 20;
+        int n_2 = 40;
+        int n_3 = 60;
+        int n_4 = 80;
+        int n_5 = 100;
+
+        List<Integer> problemSizeList = new ArrayList<>();
+        problemSizeList.add(n_1);
+        problemSizeList.add(n_2);
+        problemSizeList.add(n_3);
+        problemSizeList.add(n_4);
+        problemSizeList.add(n_5);
+
+        Random random = new Random();
+        // 1
+        double[][] points = new double[n_1][2];
+        for (int i = 0; i < points.length; i++) {
+            points[i][0] = random.nextDouble();
+            points[i][1] = random.nextDouble();
+        }
+        TravelingSalesmanEvaluationFunction ef_1 = new TravelingSalesmanRouteEvaluationFunction(points);
+        Distribution odd_1 = new DiscretePermutationDistribution(n_1);
+        NeighborFunction nf_1 = new SwapNeighbor();
+        HillClimbingProblem hcp_1 = new GenericHillClimbingProblem(ef_1, odd_1, nf_1);
+        MutationFunction mf_1 = new SwapMutation();
+        CrossoverFunction cf_1 = new TravelingSalesmanCrossOver(ef_1);
+        GeneticAlgorithmProblem gap_1 = new GenericGeneticAlgorithmProblem(ef_1, odd_1, mf_1, cf_1);
+
+        // 2
+        points = new double[n_2][2];
+        for (int i = 0; i < points.length; i++) {
+            points[i][0] = random.nextDouble();
+            points[i][1] = random.nextDouble();
+        }
+        TravelingSalesmanEvaluationFunction ef_2 = new TravelingSalesmanRouteEvaluationFunction(points);
+        Distribution odd_2 = new DiscretePermutationDistribution(n_2);
+        NeighborFunction nf_2 = new SwapNeighbor();
+        HillClimbingProblem hcp_2 = new GenericHillClimbingProblem(ef_2, odd_2, nf_2);
+        MutationFunction mf_2 = new SwapMutation();
+        CrossoverFunction cf_2 = new TravelingSalesmanCrossOver(ef_2);
+        GeneticAlgorithmProblem gap_2 = new GenericGeneticAlgorithmProblem(ef_2, odd_2, mf_2, cf_2);
+        // 3
+        points = new double[n_3][2];
+        for (int i = 0; i < points.length; i++) {
+            points[i][0] = random.nextDouble();
+            points[i][1] = random.nextDouble();
+        }
+        TravelingSalesmanEvaluationFunction ef_3 = new TravelingSalesmanRouteEvaluationFunction(points);
+        Distribution odd_3 = new DiscretePermutationDistribution(n_3);
+        NeighborFunction nf_3 = new SwapNeighbor();
+        HillClimbingProblem hcp_3 = new GenericHillClimbingProblem(ef_3, odd_3, nf_3);
+        MutationFunction mf_3 = new SwapMutation();
+        CrossoverFunction cf_3 = new TravelingSalesmanCrossOver(ef_3);
+        GeneticAlgorithmProblem gap_3 = new GenericGeneticAlgorithmProblem(ef_3, odd_3, mf_3, cf_3);
+        // 4
+        points = new double[n_4][2];
+        for (int i = 0; i < points.length; i++) {
+            points[i][0] = random.nextDouble();
+            points[i][1] = random.nextDouble();
+        }
+        TravelingSalesmanEvaluationFunction ef_4 = new TravelingSalesmanRouteEvaluationFunction(points);
+        Distribution odd_4 = new DiscretePermutationDistribution(n_4);
+        NeighborFunction nf_4 = new SwapNeighbor();
+        HillClimbingProblem hcp_4 = new GenericHillClimbingProblem(ef_4, odd_4, nf_4);
+        MutationFunction mf_4 = new SwapMutation();
+        CrossoverFunction cf_4 = new TravelingSalesmanCrossOver(ef_4);
+        GeneticAlgorithmProblem gap_4 = new GenericGeneticAlgorithmProblem(ef_4, odd_4, mf_4, cf_4);
+        // 5
+        points = new double[n_5][2];
+        for (int i = 0; i < points.length; i++) {
+            points[i][0] = random.nextDouble();
+            points[i][1] = random.nextDouble();
+        }
+        TravelingSalesmanEvaluationFunction ef_5 = new TravelingSalesmanRouteEvaluationFunction(points);
+        Distribution odd_5 = new DiscretePermutationDistribution(n_5);
+        NeighborFunction nf_5 = new SwapNeighbor();
+        HillClimbingProblem hcp_5 = new GenericHillClimbingProblem(ef_5, odd_5, nf_5);
+        MutationFunction mf_5 = new SwapMutation();
+        CrossoverFunction cf_5 = new TravelingSalesmanCrossOver(ef_5);
+        GeneticAlgorithmProblem gap_5 = new GenericGeneticAlgorithmProblem(ef_5, odd_5, mf_5, cf_5);
+        // sa lists
+        List<HillClimbingProblem> saProblemList = new ArrayList<>();
+        saProblemList.add(hcp_1);
+        saProblemList.add(hcp_2);
+        saProblemList.add(hcp_3);
+        saProblemList.add(hcp_4);
+        saProblemList.add(hcp_5);
+
+        List<EvaluationFunction> evaluationFunctionList = new ArrayList<>();
+        evaluationFunctionList.add(ef_1);
+        evaluationFunctionList.add(ef_2);
+        evaluationFunctionList.add(ef_3);
+        evaluationFunctionList.add(ef_4);
+        evaluationFunctionList.add(ef_5);
+
+        List<Double> tList = new ArrayList<>();
+        tList.add(1E12);
+        tList.add(1E5);
+
+        List<Double> coolingList = new ArrayList<>();
+        coolingList.add(0.95);
+        coolingList.add(0.95);
+
+        // ga parameters
+        List<GeneticAlgorithmProblem> gaProblemList = new ArrayList<>();
+        gaProblemList.add(gap_1);
+        gaProblemList.add(gap_2);
+        gaProblemList.add(gap_3);
+        gaProblemList.add(gap_4);
+        gaProblemList.add(gap_5);
+        List<Integer> populationList = new ArrayList<>();
+        populationList.add(200);
+        List<Integer> toMateList = new ArrayList<>();
+        toMateList.add(150);
+        List<Integer> mutationList = new ArrayList<>();
+        mutationList.add(30);
+
+        String directory = "TravelingSalesman";
+
+        TestUtility.testSimulatedAnnealingWithDifferentProblemSizes(
+                problemSizeList,
+                saProblemList,
+                evaluationFunctionList,
+                tList,
+                coolingList,
+                directory);
+
+        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
+                problemSizeList,
+                gaProblemList,
+                evaluationFunctionList,
+                populationList,
+                toMateList,
+                mutationList,
+                directory
+        );
+
     }
 }
