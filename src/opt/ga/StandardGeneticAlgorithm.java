@@ -47,6 +47,10 @@ public class StandardGeneticAlgorithm extends OptimizationAlgorithm {
      * The values of the population
      */
     private double[] values;
+
+    private int totalValueEvaluations;
+
+    private int totalValueEvaluationsToFindOptimalValue;
     
     /**
      * Make a new genetic algorithm
@@ -117,12 +121,17 @@ public class StandardGeneticAlgorithm extends OptimizationAlgorithm {
         for (int i = 0; i < newValues.length; i++) {
             if (newValues[i] == -1) {
                 newValues[i] = ga.value(newPopulation[i]);
+                totalValueEvaluations++;
             }
         }
         // the new generation
         population = newPopulation;
         values = newValues;
         return sum / populationSize;
+    }
+
+    public int getTotalValueEvaluationsToFindOptimalValue() {
+        return totalValueEvaluationsToFindOptimalValue;
     }
 
     /**
@@ -135,6 +144,7 @@ public class StandardGeneticAlgorithm extends OptimizationAlgorithm {
         for (int i = 1; i < population.length; i++) {
             double value = values[i];
             if (value > bestVal) {
+                totalValueEvaluationsToFindOptimalValue = totalValueEvaluations;
                 bestVal = value;
                 best = i;
             }

@@ -18,7 +18,11 @@ public class RandomizedHillClimbing extends OptimizationAlgorithm {
      * The current value of the data
      */
     private double curVal;
-    
+
+    private int totalValueEvaluations;
+
+    private int totalValueEvaluationsToFindOptimalValue;
+
     /**
      * Make a new randomized hill climbing
      */
@@ -34,12 +38,18 @@ public class RandomizedHillClimbing extends OptimizationAlgorithm {
     public double train() {
         HillClimbingProblem hcp = (HillClimbingProblem) getOptimizationProblem();
         Instance neigh = hcp.neighbor(cur);
+        totalValueEvaluations++;
         double neighVal = hcp.value(neigh);
         if (neighVal > curVal) {
+            totalValueEvaluationsToFindOptimalValue = totalValueEvaluations;
             curVal = neighVal;
             cur = neigh;
         }
         return curVal;
+    }
+
+    public int getTotalValueEvaluationsToFindOptimalValue() {
+        return totalValueEvaluationsToFindOptimalValue;
     }
 
     /**

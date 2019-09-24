@@ -30,6 +30,10 @@ public class SimulatedAnnealing extends OptimizationAlgorithm {
      * The cooling parameter
      */
     private double cooling;
+
+    private int totalValueEvaluations;
+
+    private int totalValueEvaluationsToFindOptimalValue;
     
     /**
      * Make a new simulated annealing hill climbing
@@ -52,13 +56,19 @@ public class SimulatedAnnealing extends OptimizationAlgorithm {
         HillClimbingProblem p = (HillClimbingProblem) getOptimizationProblem();
         Instance neigh = p.neighbor(cur);
         double neighVal = p.value(neigh);
+        totalValueEvaluations++;
         if (neighVal > curVal || Distribution.random.nextDouble() < 
                 Math.exp((neighVal - curVal) / t)) {
+            totalValueEvaluationsToFindOptimalValue = totalValueEvaluations;
             curVal = neighVal;
             cur = neigh;
         }
         t *= cooling;
         return curVal;
+    }
+
+    public int getTotalValueEvaluationsToFindOptimalValue() {
+        return totalValueEvaluationsToFindOptimalValue;
     }
 
     /**
