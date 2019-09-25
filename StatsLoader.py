@@ -1,13 +1,21 @@
 
 
-def load_rhc(problem):
+def initialize_list_of_lists(n):
+    list = []
+
+    for i in range(n):
+        list.append([])
+    return list
+
+
+def load_rhc(file, number_of_models):
     print("Loading sa stats...")
 
-    with open(problem + '/RHC_Stats.txt') as fp:
+    with open(file) as fp:
         line = fp.readline()
         cnt = 1
         problem_size_list = []
-        max_score_achieved_list = [[]]
+        max_score_achieved_list = initialize_list_of_lists(number_of_models)
         best_max_score = []
         current = None
         best_score = 0.0
@@ -33,14 +41,14 @@ def load_rhc(problem):
     return problem_size_list, max_score_achieved_list, best_max_score
 
 
-def load_sa(problem):
+def load_sa(file, number_of_models):
     print("Loading sa stats...")
 
-    with open(problem + '/SA_Stats.txt') as fp:
+    with open(file) as fp:
         line = fp.readline()
         cnt = 1
         problem_size_list = []
-        max_score_achieved_list = [[], [], [], []]
+        max_score_achieved_list = initialize_list_of_lists(number_of_models)
         best_max_score = []
         current = None
         best_score = 0.0
@@ -66,14 +74,14 @@ def load_sa(problem):
     return problem_size_list, max_score_achieved_list, best_max_score
 
 
-def load_ga(problem):
+def load_ga(file, number_of_models):
     print("Loading ga stats...")
 
-    with open(problem + '/GA_Stats_salesman_cross_over.txt') as fp:
+    with open(file) as fp:
         line = fp.readline()
         cnt = 1
         problem_size_list = []
-        max_score_achieved_list = [[], [], [], [], []]
+        max_score_achieved_list = initialize_list_of_lists(number_of_models)
         best_max_score = []
         current = None
         best_score = 0.0
@@ -99,14 +107,14 @@ def load_ga(problem):
     return problem_size_list, max_score_achieved_list, best_max_score
 
 
-def load_mimic(problem):
+def load_mimic(file, number_of_models):
     print("Loading sa stats...")
 
-    with open(problem + '/MIMIC_Stats.txt') as fp:
+    with open(file) as fp:
         line = fp.readline()
         cnt = 1
         problem_size_list = []
-        max_score_achieved_list = [[]]
+        max_score_achieved_list = initialize_list_of_lists(number_of_models)
         best_max_score = []
         current = None
         best_score = 0.0

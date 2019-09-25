@@ -1,16 +1,11 @@
-from sklearn.model_selection import learning_curve
-from sklearn.model_selection import ShuffleSplit
-
-import numpy as np
 import matplotlib.pyplot as plt
-import time
 
 
-def plot_multiple(x, y, color_list):
+def plot_multiple(x, y, color_list, label_list):
     plt.figure()
-    plt.legend(loc="best")
+    # plt.legend(loc="best")
     for i in range(len(y)):
-        plt.plot(x, y[i], color=color_list[i])
+        plt.plot(x, y[i], color=color_list[i], label=label_list[i])
     return plt
 
 
