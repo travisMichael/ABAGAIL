@@ -30,7 +30,7 @@ import shared.FixedIterationTrainer;
  */
 public class TravelingSalesmanTest {
     /** The n value */
-    private static final int N = 20;
+    private static final int N = 40;
     /**
      * The test main
      * @param args ignored
@@ -85,11 +85,11 @@ public class TravelingSalesmanTest {
     }
 
     private static void runMultipleTests() {
-        int n_1 = 20;
-        int n_2 = 40;
-        int n_3 = 60;
-        int n_4 = 80;
-        int n_5 = 100;
+        int n_1 = 40;
+        int n_2 = 60;
+        int n_3 = 80;
+        int n_4 = 100;
+        int n_5 = 120;
 
         List<Integer> problemSizeList = new ArrayList<>();
         problemSizeList.add(n_1);
@@ -113,6 +113,11 @@ public class TravelingSalesmanTest {
         CrossoverFunction cf_1 = new TravelingSalesmanCrossOver(ef_1);
         GeneticAlgorithmProblem gap_1 = new GenericGeneticAlgorithmProblem(ef_1, odd_1, mf_1, cf_1);
 
+        int[] ranges = new int[n_1];
+        Arrays.fill(ranges, n_1);
+        Distribution df_1 = new DiscreteDependencyTree(.1, ranges);
+        ProbabilisticOptimizationProblem pop_1 = new GenericProbabilisticOptimizationProblem(ef_1, odd_1, df_1);
+
         // 2
         points = new double[n_2][2];
         for (int i = 0; i < points.length; i++) {
@@ -126,6 +131,12 @@ public class TravelingSalesmanTest {
         MutationFunction mf_2 = new SwapMutation();
         CrossoverFunction cf_2 = new TravelingSalesmanCrossOver(ef_2);
         GeneticAlgorithmProblem gap_2 = new GenericGeneticAlgorithmProblem(ef_2, odd_2, mf_2, cf_2);
+
+        ranges = new int[n_2];
+        Arrays.fill(ranges, n_2);
+        Distribution df_2 = new DiscreteDependencyTree(.1, ranges);
+        ProbabilisticOptimizationProblem pop_2 = new GenericProbabilisticOptimizationProblem(ef_2, odd_2, df_2);
+
         // 3
         points = new double[n_3][2];
         for (int i = 0; i < points.length; i++) {
@@ -139,6 +150,12 @@ public class TravelingSalesmanTest {
         MutationFunction mf_3 = new SwapMutation();
         CrossoverFunction cf_3 = new TravelingSalesmanCrossOver(ef_3);
         GeneticAlgorithmProblem gap_3 = new GenericGeneticAlgorithmProblem(ef_3, odd_3, mf_3, cf_3);
+
+        ranges = new int[n_3];
+        Arrays.fill(ranges, n_3);
+        Distribution df_3 = new DiscreteDependencyTree(.1, ranges);
+        ProbabilisticOptimizationProblem pop_3 = new GenericProbabilisticOptimizationProblem(ef_3, odd_3, df_3);
+
         // 4
         points = new double[n_4][2];
         for (int i = 0; i < points.length; i++) {
@@ -152,6 +169,12 @@ public class TravelingSalesmanTest {
         MutationFunction mf_4 = new SwapMutation();
         CrossoverFunction cf_4 = new TravelingSalesmanCrossOver(ef_4);
         GeneticAlgorithmProblem gap_4 = new GenericGeneticAlgorithmProblem(ef_4, odd_4, mf_4, cf_4);
+
+        ranges = new int[n_4];
+        Arrays.fill(ranges, n_4);
+        Distribution df_4 = new DiscreteDependencyTree(.1, ranges);
+        ProbabilisticOptimizationProblem pop_4 = new GenericProbabilisticOptimizationProblem(ef_4, odd_4, df_4);
+
         // 5
         points = new double[n_5][2];
         for (int i = 0; i < points.length; i++) {
@@ -165,6 +188,13 @@ public class TravelingSalesmanTest {
         MutationFunction mf_5 = new SwapMutation();
         CrossoverFunction cf_5 = new TravelingSalesmanCrossOver(ef_5);
         GeneticAlgorithmProblem gap_5 = new GenericGeneticAlgorithmProblem(ef_5, odd_5, mf_5, cf_5);
+
+        ranges = new int[n_5];
+        Arrays.fill(ranges, n_5);
+        Distribution df_5 = new DiscreteDependencyTree(.1, ranges);
+        ProbabilisticOptimizationProblem pop_5 = new GenericProbabilisticOptimizationProblem(ef_5, odd_5, df_5);
+
+
         // sa lists
         List<HillClimbingProblem> saProblemList = new ArrayList<>();
         saProblemList.add(hcp_1);
@@ -182,11 +212,15 @@ public class TravelingSalesmanTest {
 
         List<Double> tList = new ArrayList<>();
         tList.add(1E12);
-        tList.add(1E5);
+        tList.add(1E12);
+        tList.add(1E12);
+        tList.add(1E12);
 
         List<Double> coolingList = new ArrayList<>();
-        coolingList.add(0.95);
-        coolingList.add(0.95);
+        coolingList.add(0.99);
+        coolingList.add(0.9);
+        coolingList.add(0.8);
+        coolingList.add(0.7);
 
         // ga parameters
         List<GeneticAlgorithmProblem> gaProblemList = new ArrayList<>();
@@ -197,28 +231,80 @@ public class TravelingSalesmanTest {
         gaProblemList.add(gap_5);
         List<Integer> populationList = new ArrayList<>();
         populationList.add(200);
+        populationList.add(300);
+        populationList.add(400);
+        populationList.add(500);
+        populationList.add(600);
         List<Integer> toMateList = new ArrayList<>();
         toMateList.add(150);
+        toMateList.add(200);
+        toMateList.add(250);
+        toMateList.add(300);
+        toMateList.add(350);
         List<Integer> mutationList = new ArrayList<>();
         mutationList.add(30);
+        mutationList.add(50);
+        mutationList.add(70);
+        mutationList.add(90);
+        mutationList.add(110);
+
+
+        // mimic parameters
+        List<ProbabilisticOptimizationProblem> mimicProblemList = new ArrayList<>();
+        mimicProblemList.add(pop_1);
+        mimicProblemList.add(pop_2);
+        mimicProblemList.add(pop_3);
+        mimicProblemList.add(pop_4);
+        mimicProblemList.add(pop_5);
+
+        List<Integer> samplesList = new ArrayList<>();
+        samplesList.add(150);
+        samplesList.add(200);
+        samplesList.add(250);
+        samplesList.add(300);
+        samplesList.add(350);
+        List<Integer> toKeepList = new ArrayList<>();
+        toKeepList.add(80);
+        toKeepList.add(100);
+        toKeepList.add(120);
+        toKeepList.add(160);
+        toKeepList.add(200);
 
         String directory = "TravelingSalesman";
 
-        TestUtility.testSimulatedAnnealingWithDifferentProblemSizes(
-                problemSizeList,
-                saProblemList,
-                evaluationFunctionList,
-                tList,
-                coolingList,
-                directory);
+//        TestUtility.testRHCWithDifferentProblemSizes(
+//                problemSizeList,
+//                saProblemList,
+//                evaluationFunctionList,
+//                directory
+//        );
+//
+//        TestUtility.testSimulatedAnnealingWithDifferentProblemSizes(
+//                problemSizeList,
+//                saProblemList,
+//                evaluationFunctionList,
+//                tList,
+//                coolingList,
+//                directory
+//        );
+//
+//        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
+//                problemSizeList,
+//                gaProblemList,
+//                evaluationFunctionList,
+//                populationList,
+//                toMateList,
+//                mutationList,
+//                "salesman_cross_over",
+//                directory
+//        );
 
-        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
+        TestUtility.testMIMICWithDifferentProblemSizes(
                 problemSizeList,
-                gaProblemList,
+                mimicProblemList,
                 evaluationFunctionList,
-                populationList,
-                toMateList,
-                mutationList,
+                samplesList,
+                toKeepList,
                 directory
         );
 
