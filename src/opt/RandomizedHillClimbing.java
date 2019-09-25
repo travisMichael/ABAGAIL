@@ -23,11 +23,16 @@ public class RandomizedHillClimbing extends OptimizationAlgorithm {
 
     private int totalValueEvaluationsToFindOptimalValue;
 
+    private long beginTime;
+
+    private long timeTakenToFindBestValue;
+
     /**
      * Make a new randomized hill climbing
      */
     public RandomizedHillClimbing(HillClimbingProblem hcp) {
         super(hcp);
+        this.beginTime = System.currentTimeMillis();
         cur = hcp.random();
         curVal = hcp.value(cur);
     }
@@ -41,11 +46,16 @@ public class RandomizedHillClimbing extends OptimizationAlgorithm {
         totalValueEvaluations++;
         double neighVal = hcp.value(neigh);
         if (neighVal > curVal) {
+            timeTakenToFindBestValue = System.currentTimeMillis() - beginTime;
             totalValueEvaluationsToFindOptimalValue = totalValueEvaluations;
             curVal = neighVal;
             cur = neigh;
         }
         return curVal;
+    }
+
+    public long getTimeTakenToFindBestValue() {
+        return timeTakenToFindBestValue;
     }
 
     public int getTotalValueEvaluationsToFindOptimalValue() {

@@ -48,9 +48,13 @@ public class StandardGeneticAlgorithm extends OptimizationAlgorithm {
      */
     private double[] values;
 
-    private int totalValueEvaluations;
+    private int totalValueEvaluations = 0;
 
     private int totalValueEvaluationsToFindOptimalValue;
+
+    private long beginTime;
+
+    private long timeTakenToFindBestValue;
     
     /**
      * Make a new genetic algorithm
@@ -61,6 +65,7 @@ public class StandardGeneticAlgorithm extends OptimizationAlgorithm {
      */
     public StandardGeneticAlgorithm(int populationSize, int toMate, int toMutate, GeneticAlgorithmProblem gap) {
         super(gap);
+        this.beginTime = System.currentTimeMillis();
         this.toMate = toMate;
         this.toMutate = toMutate;
         this.populationSize = populationSize;
@@ -130,6 +135,10 @@ public class StandardGeneticAlgorithm extends OptimizationAlgorithm {
         return sum / populationSize;
     }
 
+    public long getTimeTakenToFindBestValue() {
+        return timeTakenToFindBestValue;
+    }
+
     public int getTotalValueEvaluationsToFindOptimalValue() {
         return totalValueEvaluationsToFindOptimalValue;
     }
@@ -144,6 +153,7 @@ public class StandardGeneticAlgorithm extends OptimizationAlgorithm {
         for (int i = 1; i < population.length; i++) {
             double value = values[i];
             if (value > bestVal) {
+                timeTakenToFindBestValue = System.currentTimeMillis() - beginTime;
                 totalValueEvaluationsToFindOptimalValue = totalValueEvaluations;
                 bestVal = value;
                 best = i;

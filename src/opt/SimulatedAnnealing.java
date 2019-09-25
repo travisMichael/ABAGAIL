@@ -31,9 +31,13 @@ public class SimulatedAnnealing extends OptimizationAlgorithm {
      */
     private double cooling;
 
-    private int totalValueEvaluations;
+    private int totalValueEvaluations = 0;
 
     private int totalValueEvaluationsToFindOptimalValue;
+
+    private long beginTime;
+
+    private long timeTakenToFindBestValue;
     
     /**
      * Make a new simulated annealing hill climbing
@@ -43,6 +47,7 @@ public class SimulatedAnnealing extends OptimizationAlgorithm {
      */
     public SimulatedAnnealing(double t, double cooling, HillClimbingProblem hcp) {
         super(hcp);
+        this.beginTime = System.currentTimeMillis();
         this.t = t;
         this.cooling = cooling;
         this.cur = hcp.random();
@@ -59,12 +64,17 @@ public class SimulatedAnnealing extends OptimizationAlgorithm {
         totalValueEvaluations++;
         if (neighVal > curVal || Distribution.random.nextDouble() < 
                 Math.exp((neighVal - curVal) / t)) {
+            timeTakenToFindBestValue = System.currentTimeMillis() - beginTime;
             totalValueEvaluationsToFindOptimalValue = totalValueEvaluations;
             curVal = neighVal;
             cur = neigh;
         }
         t *= cooling;
         return curVal;
+    }
+
+    public long getTimeTakenToFindBestValue() {
+        return timeTakenToFindBestValue;
     }
 
     public int getTotalValueEvaluationsToFindOptimalValue() {

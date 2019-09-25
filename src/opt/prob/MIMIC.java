@@ -32,6 +32,14 @@ public class MIMIC extends OptimizationAlgorithm {
      */
     private int tokeep;
 
+    private int totalValueEvaluations = 0;
+
+    private int totalValueEvaluationsToFindOptimalValue;
+
+    private long beginTime;
+
+    private long timeTakenToFindBestValue;
+
     /**
      * Make a new mimic
      * @param samples the number of samples to take each iteration
@@ -43,6 +51,7 @@ public class MIMIC extends OptimizationAlgorithm {
      */
     public MIMIC(int samples, int tokeep, ProbabilisticOptimizationProblem op) {
         super(op);
+        this.beginTime = System.currentTimeMillis();
         this.tokeep = tokeep;
         this.samples = samples;
         Instance[] data = new Instance[samples];
@@ -51,6 +60,14 @@ public class MIMIC extends OptimizationAlgorithm {
         }
         distribution = op.getDistribution();
         distribution.estimate(new DataSet(data));
+    }
+
+    public long getTimeTakenToFindBestValue() {
+        return timeTakenToFindBestValue;
+    }
+
+    public int getTotalValueEvaluationsToFindOptimalValue() {
+        return totalValueEvaluationsToFindOptimalValue;
     }
 
     /**
@@ -66,7 +83,10 @@ public class MIMIC extends OptimizationAlgorithm {
         Instance best = data[0];
         for (int i = 1; i < data.length; i++) {
             double value = op.value(data[i]);
+            totalValueEvaluations++;
             if (value > bestVal) {
+                timeTakenToFindBestValue = System.currentTimeMillis() - beginTime;
+                totalValueEvaluationsToFindOptimalValue = totalValueEvaluations;
                 bestVal = value;
                 best = data[i];
             }
@@ -86,6 +106,7 @@ public class MIMIC extends OptimizationAlgorithm {
         double[] values = new double[data.length];
         for (int i = 0; i < data.length; i++) {
             values[i] = op.value(data[i]);
+            totalValueEvaluations++;
         }
         double[] temp = new double[values.length];
         System.arraycopy(values, 0, temp, 0, temp.length);
