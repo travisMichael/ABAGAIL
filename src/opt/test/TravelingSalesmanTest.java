@@ -288,16 +288,17 @@ public class TravelingSalesmanTest {
 //                directory
 //        );
 //
-//        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
-//                problemSizeList,
-//                gaProblemList,
-//                evaluationFunctionList,
-//                populationList,
-//                toMateList,
-//                mutationList,
-//                "salesman_cross_over",
-//                directory
-//        );
+        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
+                problemSizeList,
+                gaProblemList,
+                evaluationFunctionList,
+                populationList,
+                toMateList,
+                mutationList,
+                "salesman_cross_over",
+                directory,
+                false
+        );
 
         TestUtility.testMIMICWithDifferentProblemSizes(
                 problemSizeList,
@@ -305,7 +306,8 @@ public class TravelingSalesmanTest {
                 evaluationFunctionList,
                 samplesList,
                 toKeepList,
-                directory
+                directory,
+                false
         );
 
     }
