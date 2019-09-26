@@ -265,16 +265,16 @@ public class FlipFlopTest {
 //                directory
 //        );
 
-        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
-                problemSizeList,
-                gaSingleProblemList,
-                evaluationFunctionList,
-                populationList,
-                toMateList,
-                mutationList,
-                "single_cross_over",
-                directory
-        );
+//        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
+//                problemSizeList,
+//                gaSingleProblemList,
+//                evaluationFunctionList,
+//                populationList,
+//                toMateList,
+//                mutationList,
+//                "single_cross_over",
+//                directory
+//        );
 //
 //        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
 //                problemSizeList,
@@ -287,24 +287,26 @@ public class FlipFlopTest {
 //                directory
 //        );
 //
-//        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
-//                problemSizeList,
-//                gaUniformProblemList,
-//                evaluationFunctionList,
-//                populationList,
-//                toMateList,
-//                mutationList,
-//                "uniform_cross_over",
-//                directory
-//        );
+        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
+                problemSizeList,
+                gaUniformProblemList,
+                evaluationFunctionList,
+                populationList,
+                toMateList,
+                mutationList,
+                "uniform_cross_over",
+                directory,
+                false
+        );
 
-//        TestUtility.testMIMICWithDifferentProblemSizes(
-//                problemSizeList,
-//                mimicProblemList,
-//                evaluationFunctionList,
-//                samplesList,
-//                toKeepList,
-//                directory
-//        );
+        TestUtility.testMIMICWithDifferentProblemSizes(
+                problemSizeList,
+                mimicProblemList,
+                evaluationFunctionList,
+                samplesList,
+                toKeepList,
+                directory,
+                false
+        );
     }
 }
