@@ -5,10 +5,13 @@ import opt.HillClimbingProblem;
 import opt.RandomizedHillClimbing;
 import opt.SimulatedAnnealing;
 import opt.ga.GeneticAlgorithmProblem;
+import opt.ga.MaxKColorFitnessFunction;
 import opt.ga.StandardGeneticAlgorithm;
 import opt.prob.MIMIC;
 import opt.prob.ProbabilisticOptimizationProblem;
 import shared.FixedIterationTrainer;
+import shared.KColorTrainer;
+import shared.Trainer;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,28 +22,7 @@ import java.util.List;
 public class TestUtility {
 
     public static void main(String[] args) {
-        // String PATH = "/Traveling/";
-        String directoryName = "Traveling";
-        String fileName = "example.txt";
-
-        File directory = new File(directoryName);
-        if (! directory.exists()){
-            directory.mkdir();
-            // If you require it to make the entire directory path including parents,
-            // use directory.mkdirs(); here instead.
-        }
-
-        File file = new File(directoryName + "/" + fileName);
-        try{
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write("hello");
-            bw.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-            System.exit(-1);
-        }
+        System.out.println(5 / (double)2);
     }
 
     public static void writeTestStatsToFile(StringBuilder stats, String directoryName, String fileName) {
@@ -64,6 +46,23 @@ public class TestUtility {
             System.exit(-1);
         }
 
+    }
+
+    private static void appendStats(
+            StringBuilder stringBuilder,
+            double totalOptimalValues,
+            int totalFunctionEvaluations,
+            long totalTimeTakenToRun,
+            int trials) {
+        stringBuilder.append(totalOptimalValues / trials);
+        stringBuilder.append(" ");
+        stringBuilder.append(totalFunctionEvaluations / (double)trials);
+        stringBuilder.append(" ");
+        stringBuilder.append(totalTimeTakenToRun / (double)trials);
+        stringBuilder.append("\n");
+        System.out.println("Avg Optimal Value: " + totalOptimalValues / trials);
+        System.out.println("Avg Number of functional evaluations: " + totalFunctionEvaluations / (double)trials);
+        System.out.println("Avg time taken to run: " + totalTimeTakenToRun / (double)trials);
     }
 
     public static void testRHCWithDifferentProblemSizes(
@@ -99,15 +98,7 @@ public class TestUtility {
                 totalFunctionEvaluations += rhc.getTotalValueEvaluationsToFindOptimalValue();
                 totalTimeTakenToRun += rhc.getTimeTakenToFindBestValue();
             }
-            algorithmStats.append(totalOptimalValues / trials);
-            algorithmStats.append(" ");
-            algorithmStats.append(totalFunctionEvaluations / trials);
-            algorithmStats.append(" ");
-            algorithmStats.append(totalTimeTakenToRun / trials);
-            algorithmStats.append("\n");
-            System.out.println("Avg Optimal Value: " + totalOptimalValues / trials);
-            System.out.println("Avg Number of functional evaluations: " + totalFunctionEvaluations / trials);
-            System.out.println("Avg time taken to run: " + totalTimeTakenToRun / trials);
+            appendStats(algorithmStats, totalOptimalValues, totalFunctionEvaluations, totalTimeTakenToRun, trials);
 
             System.out.println(algorithmStats);
             writeTestStatsToFile(algorithmStats, directoryName, "RHC_Stats.txt");
@@ -158,15 +149,7 @@ public class TestUtility {
                     totalFunctionEvaluations += sa.getTotalValueEvaluationsToFindOptimalValue();
                     totalTimeTakenToRun += sa.getTimeTakenToFindBestValue();
                 }
-                algorithmStats.append(totalOptimalValues / trials);
-                algorithmStats.append(" ");
-                algorithmStats.append(totalFunctionEvaluations / trials);
-                algorithmStats.append(" ");
-                algorithmStats.append(totalTimeTakenToRun / trials);
-                algorithmStats.append("\n");
-                System.out.println("Avg Optimal Value: " + totalOptimalValues / trials);
-                System.out.println("Avg Number of functional evaluations: " + totalFunctionEvaluations / trials);
-                System.out.println("Avg time taken to run: " + totalTimeTakenToRun / trials);
+                appendStats(algorithmStats, totalOptimalValues, totalFunctionEvaluations, totalTimeTakenToRun, trials);
             }
             System.out.println(algorithmStats);
             writeTestStatsToFile(algorithmStats, directoryName, "SA_Stats.txt");
@@ -181,7 +164,8 @@ public class TestUtility {
             List<Integer> toMateList,
             List<Integer> mutationList,
             String algorithmType,
-            String directoryName) {
+            String directoryName,
+            boolean isKColorProblem) {
 
         StringBuilder algorithmStats = new StringBuilder();
 
@@ -213,7 +197,13 @@ public class TestUtility {
                 int trials = 5;
                 for (int j = 0; j < trials; j++) {
                     StandardGeneticAlgorithm ga = new StandardGeneticAlgorithm(population, toMate, mutate, gap);
-                    FixedIterationTrainer fit = new FixedIterationTrainer(ga, 1000);
+                    Trainer fit;
+                    if (isKColorProblem) {
+                        fit = new KColorTrainer(ga,(MaxKColorFitnessFunction)ef, 1000);
+                    } else {
+                        fit = new FixedIterationTrainer(ga, 1000);
+                    }
+
                     fit.train();
                     System.out.println(ef.value(ga.getOptimal()));
 
@@ -224,15 +214,7 @@ public class TestUtility {
                     totalFunctionEvaluations += ga.getTotalValueEvaluationsToFindOptimalValue();
                     totalTimeTakenToRun += ga.getTimeTakenToFindBestValue();
                 }
-                algorithmStats.append(totalOptimalValues / trials);
-                algorithmStats.append(" ");
-                algorithmStats.append(totalFunctionEvaluations / trials);
-                algorithmStats.append(" ");
-                algorithmStats.append(totalTimeTakenToRun / trials);
-                algorithmStats.append("\n");
-                System.out.println("Avg Optimal Value: " + totalOptimalValues / trials);
-                System.out.println("Avg Number of functional evaluations: " + totalFunctionEvaluations / trials);
-                System.out.println("Avg time taken to run: " + totalTimeTakenToRun / trials);
+                appendStats(algorithmStats, totalOptimalValues, totalFunctionEvaluations, totalTimeTakenToRun, trials);
             }
             System.out.println(algorithmStats);
             writeTestStatsToFile(algorithmStats, directoryName, "GA_Stats_" + algorithmType +".txt");
@@ -245,7 +227,8 @@ public class TestUtility {
             List<EvaluationFunction> evalFunctionList,
             List<Integer> samplesList,
             List<Integer> toKeepList,
-            String directoryName) {
+            String directoryName,
+            boolean isKColorProblem) {
 
         StringBuilder algorithmStats = new StringBuilder();
 
@@ -273,8 +256,14 @@ public class TestUtility {
                 long totalTimeTakenToRun = 0;
                 int trials = 3;
                 for (int j = 0; j < trials; j++) {
+                    //
                     MIMIC mimic = new MIMIC(samples, toKeep, pop);
-                    FixedIterationTrainer fit = new FixedIterationTrainer(mimic, 1000);
+                    Trainer fit;
+                    if (isKColorProblem) {
+                        fit = new KColorTrainer(mimic,(MaxKColorFitnessFunction)ef, 1000);
+                    } else {
+                        fit = new FixedIterationTrainer(mimic, 1000);
+                    }
                     fit.train();
                     System.out.println(ef.value(mimic.getOptimal()));
 
@@ -285,18 +274,11 @@ public class TestUtility {
                     totalFunctionEvaluations += mimic.getTotalValueEvaluationsToFindOptimalValue();
                     totalTimeTakenToRun += mimic.getTimeTakenToFindBestValue();
                 }
-                algorithmStats.append(totalOptimalValues / trials);
-                algorithmStats.append(" ");
-                algorithmStats.append(totalFunctionEvaluations / trials);
-                algorithmStats.append(" ");
-                algorithmStats.append(totalTimeTakenToRun / trials);
-                algorithmStats.append("\n");
-                System.out.println("Avg Optimal Value: " + totalOptimalValues / trials);
-                System.out.println("Avg Number of functional evaluations: " + totalFunctionEvaluations / trials);
-                System.out.println("Avg time taken to run: " + totalTimeTakenToRun / trials);
+                appendStats(algorithmStats, totalOptimalValues, totalFunctionEvaluations, totalTimeTakenToRun, trials);
             }
             System.out.println(algorithmStats);
             writeTestStatsToFile(algorithmStats, directoryName, "MIMIC_Stats.txt");
         }
     }
+
 }
