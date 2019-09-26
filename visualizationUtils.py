@@ -5,7 +5,7 @@ def plot_multiple(x, y, color_list, label_list):
     plt.figure()
     # plt.legend(loc="best")
     for i in range(len(y)):
-        plt.plot(x, y[i], color=color_list[i], label=label_list[i])
+        plt.plot(x, y[i], '-o', color=color_list[i], label=label_list[i])
     return plt
 
 
