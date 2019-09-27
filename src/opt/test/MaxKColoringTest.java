@@ -48,7 +48,7 @@ public class MaxKColoringTest {
     /** The n value */
     private static final int N = 50; // number of vertices
     private static final int L =12; // L adjacent nodes per vertex
-    private static final int K = 20; // K possible colors
+    private static final int K = 50; // K possible colors
     /**
      * The test main
      * @param args ignored
@@ -81,7 +81,7 @@ public class MaxKColoringTest {
         Distribution df = new DiscreteDependencyTree(.1); 
         ProbabilisticOptimizationProblem pop = new GenericProbabilisticOptimizationProblem(ef, odd, df);
         
-//        long starttime = System.currentTimeMillis();
+        long starttime = System.currentTimeMillis();
 //        RandomizedHillClimbing rhc = new RandomizedHillClimbing(hcp);
 //        FixedIterationTrainer fit = new FixedIterationTrainer(rhc, 20000);
 //        fit.train();
@@ -102,7 +102,7 @@ public class MaxKColoringTest {
 //        System.out.println("============================");
 //
 //        starttime = System.currentTimeMillis();
-//        StandardGeneticAlgorithm ga = new StandardGeneticAlgorithm(200, 150, 30, gap);
+//        StandardGeneticAlgorithm ga = new StandardGeneticAlgorithm(500, 400, 10, gap);
 //        KColorTrainer fitt = new KColorTrainer(ga, ef, 500);
 //        fitt.train();
 //        System.out.println("GA: " + ef.value(ga.getOptimal()));
@@ -183,7 +183,7 @@ public class MaxKColoringTest {
         HillClimbingProblem hcp_3 = new GenericHillClimbingProblem(ef_3, odd_3, nf_3);
         GeneticAlgorithmProblem gap_3 = new GenericGeneticAlgorithmProblem(ef_3, odd_3, mf_3, cf_3);
 
-        ProbabilisticOptimizationProblem pop_3 = new GenericProbabilisticOptimizationProblem(ef_2, odd_2, df);
+        ProbabilisticOptimizationProblem pop_3 = new GenericProbabilisticOptimizationProblem(ef_3, odd_3, df);
 
         // 4
         MaxKColorFitnessFunction ef_4 = new MaxKColorFitnessFunction(vertices);
@@ -194,7 +194,7 @@ public class MaxKColoringTest {
         HillClimbingProblem hcp_4 = new GenericHillClimbingProblem(ef_4, odd_4, nf_4);
         GeneticAlgorithmProblem gap_4 = new GenericGeneticAlgorithmProblem(ef_4, odd_4, mf_4, cf_4);
 
-        ProbabilisticOptimizationProblem pop_4 = new GenericProbabilisticOptimizationProblem(ef_2, odd_2, df);
+        ProbabilisticOptimizationProblem pop_4 = new GenericProbabilisticOptimizationProblem(ef_4, odd_4, df);
 
         // 5
         MaxKColorFitnessFunction ef_5 = new MaxKColorFitnessFunction(vertices);
@@ -243,19 +243,19 @@ public class MaxKColoringTest {
         gaProblemList.add(gap_4);
         gaProblemList.add(gap_5);
         List<Integer> populationList = new ArrayList<>();
-        populationList.add(200);
+        populationList.add(500);
 //        populationList.add(300);
 //        populationList.add(400);
 //        populationList.add(500);
 //        populationList.add(600);
         List<Integer> toMateList = new ArrayList<>();
-        toMateList.add(150);
+        toMateList.add(400);
 //        toMateList.add(200);
 //        toMateList.add(250);
 //        toMateList.add(300);
 //        toMateList.add(350);
         List<Integer> mutationList = new ArrayList<>();
-        mutationList.add(30);
+        mutationList.add(10);
 //        mutationList.add(50);
 //        mutationList.add(70);
 //        mutationList.add(90);
@@ -285,21 +285,21 @@ public class MaxKColoringTest {
 
         String directory = "KColoring";
 
-//        TestUtility.testRHCWithDifferentProblemSizes(
-//                problemSizeList,
-//                saProblemList,
-//                evaluationFunctionList,
-//                directory
-//        );
-//
-//        TestUtility.testSimulatedAnnealingWithDifferentProblemSizes(
-//                problemSizeList,
-//                saProblemList,
-//                evaluationFunctionList,
-//                tList,
-//                coolingList,
-//                directory
-//        );
+        TestUtility.testRHCWithDifferentProblemSizes(
+                problemSizeList,
+                saProblemList,
+                evaluationFunctionList,
+                directory
+        );
+
+        TestUtility.testSimulatedAnnealingWithDifferentProblemSizes(
+                problemSizeList,
+                saProblemList,
+                evaluationFunctionList,
+                tList,
+                coolingList,
+                directory
+        );
 
         TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
                 problemSizeList,
