@@ -2,7 +2,7 @@ from visualizationUtils import plot_multiple
 from StatsLoader import load_rhc, load_sa, load_ga, load_mimic
 
 
-def test_sa():
+def plot_sa_ff():
     sa_problem_size_list, sa_max_score_achieved_list, _ = load_sa("FlipFlop/SA_Stats.txt", 4)
 
     # max_score vs problem_size
@@ -23,7 +23,7 @@ def test_sa():
     print("done")
 
 
-def test_ga():
+def plot_ga_ff():
     ga_problem_size_list, ga_max_score_achieved_list, _, _ = load_ga("FlipFlop/GA_Stats_single_cross_over.txt", 5)
     # max_score vs problem_size
     # number of evaluation to achieve max score vs # problem_size
@@ -43,7 +43,7 @@ def test_ga():
     print("done")
 
 
-def test_mimic():
+def plot_mimic_ff():
     mimic_problem_size_list, mimic_max_score_achieved_list, _, _ = load_mimic("FlipFlop/MIMIC_Stats.txt", 5)
     # max_score vs problem_size
     # number of evaluation to achieve max score vs # problem_size
@@ -68,7 +68,7 @@ def test_mimic():
     print("done")
 
 
-def test_best():
+def plot_best_ff():
     problem_size_list, _, rhc_best_score_list = load_rhc("FlipFlop/RHC_Stats.txt", 1)
     _, _, sa_best_score_list = load_sa("FlipFlop/SA_Stats.txt", 4)
     _, _, ga_best_score_list, _ = load_ga("FlipFlop/GA_Stats_single_cross_over.txt", 5)
