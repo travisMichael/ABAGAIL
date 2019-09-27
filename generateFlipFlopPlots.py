@@ -14,12 +14,17 @@ def test_sa():
         ["r", "b", "m", "g"],
         ["model 1", "model 2", "model 3", "model 4"]
     )
-    plt.show()
+    plt.xlabel('Problem Size')
+    plt.ylabel('Optimal Value Achieved')
+    plt.title('Optimal Values Achieved for SA Algorithms')
+    plt.legend()
+    # plt.show()
+    plt.savefig("FlipFlop/SA_plot.png")
     print("done")
 
 
 def test_ga():
-    ga_problem_size_list, ga_max_score_achieved_list, _ = load_ga("FlipFlop/GA_Stats_salesman_cross_over.txt", 5)
+    ga_problem_size_list, ga_max_score_achieved_list, _, _ = load_ga("FlipFlop/GA_Stats_single_cross_over.txt", 5)
     # max_score vs problem_size
     # number of evaluation to achieve max score vs # problem_size
     # time taken to achieve max score vs # problem_size
@@ -29,12 +34,17 @@ def test_ga():
         ["r", "b", "m", "g", "y"],
         ["model 1", "model 2", "model 3", "model 4", "model 5"]
     )
-    plt.show()
+    plt.xlabel('Problem Size')
+    plt.ylabel('Optimal Value Achieved')
+    plt.title('Optimal Values Achieved for GA Algorithms')
+    plt.legend()
+    # plt.show()
+    plt.savefig("FlipFlop/GA_plot.png")
     print("done")
 
 
 def test_mimic():
-    mimic_problem_size_list, mimic_max_score_achieved_list, _ = load_mimic("FlipFlop/MIMIC_Stats.txt", 5)
+    mimic_problem_size_list, mimic_max_score_achieved_list, _, _ = load_mimic("FlipFlop/MIMIC_Stats.txt", 5)
     # max_score vs problem_size
     # number of evaluation to achieve max score vs # problem_size
     # time taken to achieve max score vs # problem_size
@@ -44,11 +54,17 @@ def test_mimic():
         ["r", "b", "m", "g", "y"],
         ["model 1", "model 2", "model 3", "model 4", "model 5"]
     )
-    plt.ylabel('Evaluation Score')
+    # plt.ylabel('Evaluation Score')
+    # plt.xlabel('Problem Size')
+    # plt.title('MIMIC Traveling Salesman Results')
+    # plt.legend(loc="best")
+    # plt.show()
     plt.xlabel('Problem Size')
-    plt.title('MIMIC Traveling Salesman Results')
-    plt.legend(loc="best")
-    plt.show()
+    plt.ylabel('Optimal Value Achieved')
+    plt.title('Optimal Values Achieved for MIMIC Algorithms')
+    plt.legend()
+    # plt.show()
+    plt.savefig("FlipFlop/MIMIC_plot.png")
     print("done")
 
 
@@ -67,12 +83,17 @@ def test_best():
         ["r", "b", "m", "g"],
         ["RHC", "SA", "GA", "MIMIC"]
     )
-    plt.show()
+    plt.xlabel('Problem Size')
+    plt.ylabel('Optimal Value Achieved')
+    plt.title('Optimal Values Achieved by Algorithm')
+    plt.legend()
+    # plt.show()
+    plt.savefig("FlipFlop/best_model_plot.png")
     print("done")
 
 
 if __name__ == "__main__":
     # print(len(sys.argv))
     # data_set = sys.argv[1]
-    test_mimic()
+    test_sa()
 
