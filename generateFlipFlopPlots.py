@@ -55,8 +55,8 @@ def test_mimic():
 def test_best():
     problem_size_list, _, rhc_best_score_list = load_rhc("FlipFlop/RHC_Stats.txt", 1)
     _, _, sa_best_score_list = load_sa("FlipFlop/SA_Stats.txt", 4)
-    _, _, ga_best_score_list = load_ga("FlipFlop/GA_Stats_single_cross_over.txt", 5)
-    _, _, mimic_best_score_list = load_mimic("FlipFlop/MIMIC_Stats.txt", 5)
+    _, _, ga_best_score_list, _ = load_ga("FlipFlop/GA_Stats_single_cross_over.txt", 5)
+    _, _, mimic_best_score_list, _ = load_mimic("FlipFlop/MIMIC_Stats.txt", 5)
 
     best_scores = [rhc_best_score_list, sa_best_score_list, ga_best_score_list, mimic_best_score_list]
     # best_scores = [rhc_best_score_list, sa_best_score_list, ga_best_score_list]
