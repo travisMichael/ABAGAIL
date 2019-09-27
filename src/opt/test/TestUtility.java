@@ -56,13 +56,11 @@ public class TestUtility {
             int trials) {
         stringBuilder.append(totalOptimalValues / trials);
         stringBuilder.append(" ");
-        stringBuilder.append(totalFunctionEvaluations / (double)trials);
+        stringBuilder.append(totalFunctionEvaluations / trials);
         stringBuilder.append(" ");
         stringBuilder.append(totalTimeTakenToRun / (double)trials);
         stringBuilder.append("\n");
-        System.out.println("Avg Optimal Value: " + totalOptimalValues / trials);
-        System.out.println("Avg Number of functional evaluations: " + totalFunctionEvaluations / (double)trials);
-        System.out.println("Avg time taken to run: " + totalTimeTakenToRun / (double)trials);
+        System.out.println("functional evaluations: " + totalFunctionEvaluations);
     }
 
     public static void testRHCWithDifferentProblemSizes(
@@ -89,7 +87,7 @@ public class TestUtility {
                 RandomizedHillClimbing rhc = new RandomizedHillClimbing(hcp);
                 FixedIterationTrainer fit = new FixedIterationTrainer(rhc, 200000);
                 fit.train();
-                System.out.println(ef.value(rhc.getOptimal()));
+                // System.out.println(ef.value(rhc.getOptimal()));
 
                 // long startTime = System.currentTimeMillis();
                 fit.train();
@@ -100,7 +98,7 @@ public class TestUtility {
             }
             appendStats(algorithmStats, totalOptimalValues, totalFunctionEvaluations, totalTimeTakenToRun, trials);
 
-            System.out.println(algorithmStats);
+            // System.out.println(algorithmStats);
             writeTestStatsToFile(algorithmStats, directoryName, "RHC_Stats.txt");
         }
     }
@@ -195,6 +193,9 @@ public class TestUtility {
                 int totalFunctionEvaluations = 0;
                 long totalTimeTakenToRun = 0;
                 int trials = 5;
+                if (isKColorProblem) {
+                    trials = 10;
+                }
                 for (int j = 0; j < trials; j++) {
                     StandardGeneticAlgorithm ga = new StandardGeneticAlgorithm(population, toMate, mutate, gap);
                     Trainer fit;
@@ -205,7 +206,7 @@ public class TestUtility {
                     }
 
                     fit.train();
-                    System.out.println(ef.value(ga.getOptimal()));
+                    System.out.println(ef.value(ga.getOptimal()) + "  " + ga.getTotalValueEvaluationsToFindOptimalValue());
 
                     // long startTime = System.currentTimeMillis();
                     fit.train();
@@ -216,7 +217,7 @@ public class TestUtility {
                 }
                 appendStats(algorithmStats, totalOptimalValues, totalFunctionEvaluations, totalTimeTakenToRun, trials);
             }
-            System.out.println(algorithmStats);
+            // System.out.println(algorithmStats);
             writeTestStatsToFile(algorithmStats, directoryName, "GA_Stats_" + algorithmType +".txt");
         }
     }
@@ -255,6 +256,9 @@ public class TestUtility {
                 int totalFunctionEvaluations = 0;
                 long totalTimeTakenToRun = 0;
                 int trials = 3;
+                if (isKColorProblem) {
+                    trials = 10;
+                }
                 for (int j = 0; j < trials; j++) {
                     //
                     MIMIC mimic = new MIMIC(samples, toKeep, pop);
@@ -265,7 +269,7 @@ public class TestUtility {
                         fit = new FixedIterationTrainer(mimic, 1000);
                     }
                     fit.train();
-                    System.out.println(ef.value(mimic.getOptimal()));
+                    System.out.println(ef.value(mimic.getOptimal()) + "   " + mimic.getTotalValueEvaluationsToFindOptimalValue());
 
                     // long startTime = System.currentTimeMillis();
                     fit.train();
@@ -276,7 +280,7 @@ public class TestUtility {
                 }
                 appendStats(algorithmStats, totalOptimalValues, totalFunctionEvaluations, totalTimeTakenToRun, trials);
             }
-            System.out.println(algorithmStats);
+            // System.out.println(algorithmStats);
             writeTestStatsToFile(algorithmStats, directoryName, "MIMIC_Stats.txt");
         }
     }
