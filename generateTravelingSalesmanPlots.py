@@ -99,5 +99,5 @@ def plot_best_ts():
 if __name__ == "__main__":
     # print(len(sys.argv))
     # data_set = sys.argv[1]
-    plot_best_ts()
+    plot_sa_ts()
 

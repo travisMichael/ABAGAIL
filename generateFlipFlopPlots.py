@@ -95,5 +95,5 @@ def plot_best_ff():
 if __name__ == "__main__":
     # print(len(sys.argv))
     # data_set = sys.argv[1]
-    test_sa()
+    plot_sa_ff()
 

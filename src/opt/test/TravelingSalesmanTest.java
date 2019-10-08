@@ -272,22 +272,22 @@ public class TravelingSalesmanTest {
 
         String directory = "TravelingSalesman";
 
-//        TestUtility.testRHCWithDifferentProblemSizes(
-//                problemSizeList,
-//                saProblemList,
-//                evaluationFunctionList,
-//                directory
-//        );
+        TestUtility.testRHCWithDifferentProblemSizes(
+                problemSizeList,
+                saProblemList,
+                evaluationFunctionList,
+                directory
+        );
 //
-//        TestUtility.testSimulatedAnnealingWithDifferentProblemSizes(
-//                problemSizeList,
-//                saProblemList,
-//                evaluationFunctionList,
-//                tList,
-//                coolingList,
-//                directory
-//        );
-//
+        TestUtility.testSimulatedAnnealingWithDifferentProblemSizes(
+                problemSizeList,
+                saProblemList,
+                evaluationFunctionList,
+                tList,
+                coolingList,
+                directory
+        );
+
         TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
                 problemSizeList,
                 gaProblemList,

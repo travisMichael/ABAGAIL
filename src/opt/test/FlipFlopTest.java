@@ -249,55 +249,34 @@ public class FlipFlopTest {
 
         String directory = "FlipFlop";
 
-//        TestUtility.testRHCWithDifferentProblemSizes(
-//                problemSizeList,
-//                saProblemList,
-//                evaluationFunctionList,
-//                directory
-//        );
+        TestUtility.testRHCWithDifferentProblemSizes(
+                problemSizeList,
+                saProblemList,
+                evaluationFunctionList,
+                directory
+        );
 //
-//        TestUtility.testSimulatedAnnealingWithDifferentProblemSizes(
-//                problemSizeList,
-//                saProblemList,
-//                evaluationFunctionList,
-//                tList,
-//                coolingList,
-//                directory
-//        );
+        TestUtility.testSimulatedAnnealingWithDifferentProblemSizes(
+                problemSizeList,
+                saProblemList,
+                evaluationFunctionList,
+                tList,
+                coolingList,
+                directory
+        );
 
-//        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
-//                problemSizeList,
-//                gaSingleProblemList,
-//                evaluationFunctionList,
-//                populationList,
-//                toMateList,
-//                mutationList,
-//                "single_cross_over",
-//                directory
-//        );
-//
-//        TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
-//                problemSizeList,
-//                gaDoubleProblemList,
-//                evaluationFunctionList,
-//                populationList,
-//                toMateList,
-//                mutationList,
-//                "two_point_cross_over",
-//                directory
-//        );
-//
         TestUtility.testGeneticAlgorithmWithDifferentProblemSizes(
                 problemSizeList,
-                gaUniformProblemList,
+                gaSingleProblemList,
                 evaluationFunctionList,
                 populationList,
                 toMateList,
                 mutationList,
-                "uniform_cross_over",
+                "single_cross_over",
                 directory,
                 false
         );
+
 
         TestUtility.testMIMICWithDifferentProblemSizes(
                 problemSizeList,
