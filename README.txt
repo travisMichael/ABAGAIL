@@ -1,4 +1,4 @@
-To regenerate the experiments and plots from the analysis paper, you will need to clone 2 projects. The first project
+To reproduce the experiments and plots from the analysis paper, you will need to clone 2 projects. The first project
 has been forked from the ABIGAIL repository. I added code to TravelingSalesmanTest.java, FlipFlopTest.java, and
 MaxKColoring.java to gather statistics around 4 different randomized optimization algorithms. The project also
 contains python programs to read in the statistic data and create various plots about the data. To gather the stats
